@@ -1,0 +1,5 @@
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
+-dontwarn javax.annotation.Nonnull
+-dontwarn javax.annotation.concurrent.GuardedBy
+-dontwarn javax.annotation.meta.TypeQualifierDefault

@@ -1,0 +1,29 @@
+[versions]
+compose = "1.5.3"
+kotlin = "1.9.10"
+ktor = "2.3.4"
+koin-compose = "1.1.0"
+koin = "3.5.0"
+serialization = "1.6.0"
+datetime = "0.4.0"
+
+[plugins]
+compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+[libraries]
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-content-negotiation-kotlinx = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin-compose" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+
+serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
+
+[bundles]
+ktor-client = ["ktor-client-core", "ktor-client-cio", "ktor-client-content-negotiation", "ktor-client-content-negotiation-kotlinx"]
+koin = ["koin-core", "koin-compose"]
