@@ -49,6 +49,7 @@ class AppViewModel: KoinComponent {
     }
 
     fun load() {
+        println("hi")
         scope.launch {
             runCatching {
                 bodyDataManager.readBodyData(saveFile.value)

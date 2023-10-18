@@ -1,5 +1,6 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import proguard.gradle.ProGuardTask
 
 plugins {
     alias(libs.plugins.compose)
@@ -22,7 +23,7 @@ dependencies {
     // (in a separate module for demo project and in testMain).
     // With compose.desktop.common you will also lose @Preview functionality
     implementation(compose.desktop.currentOs) {
-        exclude(group = "org.jetbrains.compose.material", module = "material")
+   //     exclude(group = "org.jetbrains.compose.material", module = "material")
     }
     implementation(compose.material3)
     implementation(libs.bundles.koin)
@@ -49,13 +50,13 @@ dependencies {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "11"
     }
 }
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(11))
     }
 }
 
@@ -74,4 +75,18 @@ compose.desktop {
             configurationFiles.from(project.file("compose-desktop.pro"))
         }
     }
+}
+
+
+tasks.register<ProGuardTask>("obfuscate") {
+    val packageUberJarForCurrentOS by tasks.getting
+    dependsOn(packageUberJarForCurrentOS)
+    val files = packageUberJarForCurrentOS.outputs.files
+    injars(files)
+    outjars(files.map { file -> File(file.parentFile, "${file.nameWithoutExtension}.min.jar") })
+
+    val library = if (System.getProperty("java.version").startsWith("1.")) "lib/rt.jar" else "jmods"
+    libraryjars("${System.getProperty("java.home")}/$library")
+
+    configuration(project.file("compose-desktop.pro"))
 }

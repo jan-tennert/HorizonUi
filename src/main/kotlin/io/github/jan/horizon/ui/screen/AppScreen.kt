@@ -7,7 +7,7 @@ import io.github.jan.horizon.vm.AppViewModel
 @Composable
 fun AppScreen(viewModel: AppViewModel) {
     LaunchedEffect(Unit) {
-     //   viewModel.loadDefault()
+        viewModel.load()
     }
 
     BodyScreen(viewModel)

@@ -5,4 +5,13 @@ pluginManagement {
     }
 }
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.guardsquare:proguard-gradle:7.2.0")
+    }
+}
+
 rootProject.name = "horizon-ui"
