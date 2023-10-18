@@ -22,6 +22,8 @@ fun BodyDialog(oldData: BodyData? = null, onSubmit: (BodyData) -> Unit, onDismis
     var name by remember { mutableStateOf(oldData?.name ?: "") }
     var mass by remember { mutableStateOf(oldData?.mass?.toString() ?: "") }
     var diameter by remember { mutableStateOf(oldData?.diameter?.toString() ?: "") }
+    var rotationSpeed by remember { mutableStateOf(oldData?.rotationSpeed?.toString() ?: "") }
+    var axialTilt by remember { mutableStateOf(oldData?.axialTilt?.toString() ?: "") }
     var startingPosition by remember { mutableStateOf(oldData?.startingPosition ?: Vector3D()) }
     var startingVelocity by remember { mutableStateOf(oldData?.startingVelocity ?: Vector3D()) }
     var modelPath by remember { mutableStateOf(oldData?.modelPath ?: "") }
@@ -34,6 +36,8 @@ fun BodyDialog(oldData: BodyData? = null, onSubmit: (BodyData) -> Unit, onDismis
             CreateTextField("Name", name) { name = it }
             CreateTextField("Mass in kg", mass, mass.toDoubleOrNull() == null) { mass = it }
             CreateTextField("Diameter in km", diameter, diameter.toDoubleOrNull() == null) { diameter = it }
+            CreateTextField("Duration for one rotation in min", rotationSpeed, rotationSpeed.toDoubleOrNull() == null) { rotationSpeed = it }
+            CreateTextField("Axial Tilt in °", axialTilt, axialTilt.toDoubleOrNull() == null) { axialTilt = it }
             VectorTextField("Starting Position in km", startingPosition) { startingPosition = it }
             VectorTextField("Starting Velocity in km/s", startingVelocity) { startingVelocity = it }
             CreateTextField("Model Path", modelPath, placeholder = "earth.glb") { modelPath = it }
@@ -46,11 +50,13 @@ fun BodyDialog(oldData: BodyData? = null, onSubmit: (BodyData) -> Unit, onDismis
                             startingVelocity,
                             name,
                             modelPath,
-                            diameter.toDouble()
+                            diameter.toDouble(),
+                            rotationSpeed.toDouble(),
+                            axialTilt.toDouble()
                         )
                     )
                 },
-                enabled = name.isNotEmpty() && mass.toDoubleOrNull() != null && modelPath.isNotEmpty() && diameter.toDoubleOrNull() != null
+                enabled = name.isNotEmpty() && mass.toDoubleOrNull() != null && modelPath.isNotEmpty() && diameter.toDoubleOrNull() != null && rotationSpeed.toDoubleOrNull() != null && axialTilt.toDoubleOrNull() != null,
             ) {
                 Text("Save")
             }

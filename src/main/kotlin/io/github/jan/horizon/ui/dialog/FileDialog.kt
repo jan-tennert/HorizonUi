@@ -26,13 +26,11 @@ fun FilePicker(
             val initialDir = initialDirectory ?: System.getProperty("user.dir")
             val filePath = if(load) {
                 chooseFile(
-                    initialDirectory = initialDir,
                     fileExtension = fileFilter,
                     title = title
                 )
             } else {
                 chooseSaveFile(
-                    initialDirectory = initialDir,
                     fileExtension = fileFilter,
                     title = title
                 )
@@ -48,7 +46,6 @@ fun FilePicker(
 }
 
 internal fun chooseFile(
-    initialDirectory: String,
     fileExtension: String,
     title: String
 ): String? = MemoryStack.stackPush().use { stack ->
@@ -68,7 +65,6 @@ internal fun chooseFile(
 }
 
 internal fun chooseSaveFile(
-    initialDirectory: String,
     fileExtension: String,
     title: String
 ): String? = MemoryStack.stackPush().use { stack ->
