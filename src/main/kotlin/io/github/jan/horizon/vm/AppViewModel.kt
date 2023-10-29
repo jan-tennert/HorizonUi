@@ -19,7 +19,7 @@ class AppViewModel: KoinComponent {
     val stars = MutableStateFlow(emptyList<Body>())
     val planets = MutableStateFlow(emptyList<Body>())
     val moons = MutableStateFlow(emptyList<Body>())
-    val saveFile = MutableStateFlow<File>(File("assets/bodies.json"))
+    val saveFile = MutableStateFlow<File>(File("assets/bodies.sim"))
     val startingTimeMillis = MutableStateFlow(Clock.System.now().toEpochMilliseconds())
 
     fun dispose() {
@@ -36,8 +36,16 @@ class AppViewModel: KoinComponent {
 
     fun editBody(type: BodyType, oldBody: BodyData, newBody: BodyData) {
         when(type) {
-            STAR -> stars.value = stars.value.map { if(it.data == oldBody) Body(newBody, it.parent) else it }
-            PLANET -> planets.value = planets.value.map { if(it.data == oldBody) Body(newBody, it.parent) else it }
+            STAR -> {
+                stars.value = stars.value.map { if(it.data == oldBody) Body(newBody, it.parent) else it }
+                //update children
+                planets.value = planets.value.map { if(it.parent == oldBody.name) Body(it.data, newBody.name) else it }
+            }
+            PLANET ->{
+                planets.value = planets.value.map { if(it.data == oldBody) Body(newBody, it.parent) else it }
+                //update children
+                moons.value = moons.value.map { if(it.parent == oldBody.name) Body(it.data, newBody.name) else it }
+            }
             MOON -> moons.value = moons.value.map { if(it.data == oldBody) Body(newBody, it.parent) else it }
         }
     }
