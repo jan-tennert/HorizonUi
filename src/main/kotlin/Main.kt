@@ -8,10 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.window.FrameWindowScope
-import androidx.compose.ui.window.MenuBar
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.application
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.*
 import io.github.jan.horizon.di.appModule
 import io.github.jan.horizon.ui.screen.AppScreen
 import io.github.jan.horizon.vm.AppViewModel
@@ -39,7 +38,7 @@ fun main() {
         modules(appModule)
     }
     application {
-        Window(onCloseRequest = ::exitApplication, title = "Horizon Ui") {
+        Window(onCloseRequest = ::exitApplication, title = "Horizon Ui", state = rememberWindowState(size = DpSize(1280.dp, 720.dp))) {
             Root()
         }
     }

@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.jan.horizon.data.local.Body
@@ -42,7 +43,7 @@ fun BodyScreen(viewModel: AppViewModel) {
             TopMenuItem("File", showFileMenu, { showFileMenu = it }) {
                 DropdownMenuItem(
                     text = { Text("Open") },
-                    onClick = { showOpenDialog = true; showFileMenu = false }
+                    onClick = { showOpenDialog = true; showFileMenu = false },
                 )
                 DropdownMenuItem(
                     text = { Text("Save") },
