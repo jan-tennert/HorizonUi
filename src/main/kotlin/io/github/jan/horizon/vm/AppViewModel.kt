@@ -1,5 +1,6 @@
 package io.github.jan.horizon.vm
 
+import androidx.compose.runtime.mutableStateMapOf
 import io.github.jan.horizon.data.local.*
 import io.github.jan.horizon.data.local.BodyType.*
 import kotlinx.coroutines.CoroutineScope
@@ -21,6 +22,7 @@ class AppViewModel: KoinComponent {
     val moons = MutableStateFlow(emptyList<Body>())
     val saveFile = MutableStateFlow<File>(File("assets/bodies.sim"))
     val startingTimeMillis = MutableStateFlow(Clock.System.now().toEpochMilliseconds())
+    val expandState = mutableStateMapOf<String, Boolean>()
 
     fun dispose() {
         scope.cancel()
@@ -35,6 +37,10 @@ class AppViewModel: KoinComponent {
     }
 
     fun editBody(type: BodyType, oldBody: BodyData, newBody: BodyData) {
+        if(oldBody.name != newBody.name) {
+            expandState[newBody.name] = expandState[oldBody.name] ?: false
+            expandState.remove(oldBody.name)
+        }
         when(type) {
             STAR -> {
                 stars.value = stars.value.map { if(it.data == oldBody) Body(newBody, it.parent) else it }
@@ -54,6 +60,7 @@ class AppViewModel: KoinComponent {
         stars.value = stars.value.filter { it.data != body }
         planets.value = planets.value.filter { it.data != body }
         moons.value = moons.value.filter { it.data != body }
+        expandState.remove(body.name)
     }
 
     fun load() {

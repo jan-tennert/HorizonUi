@@ -31,7 +31,7 @@ fun BodyScreen(viewModel: AppViewModel) {
     val moons by viewModel.moons.collectAsState()
     val planets by viewModel.planets.collectAsState()
     val startingTime by viewModel.startingTimeMillis.collectAsState()
-    val expandState = remember { mutableStateMapOf<String, Boolean>() }
+    val expandState = viewModel.expandState
     var showOpenDialog by rememberSaveable { mutableStateOf(false) }
     var showSaveDialog by rememberSaveable { mutableStateOf(false) }
     var showTimeDialog by rememberSaveable { mutableStateOf(false) }
