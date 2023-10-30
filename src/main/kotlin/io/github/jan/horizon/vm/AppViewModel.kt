@@ -64,7 +64,6 @@ class AppViewModel: KoinComponent {
     }
 
     fun load() {
-        println("hi")
         scope.launch {
             runCatching {
                 bodyDataManager.readBodyData(saveFile.value)
@@ -76,6 +75,7 @@ class AppViewModel: KoinComponent {
                 this@AppViewModel.stars.value = stars
                 this@AppViewModel.planets.value = planets
                 this@AppViewModel.moons.value = moons
+                this@AppViewModel.startingTimeMillis.value = it?.startingTimeMillis ?: Clock.System.now().toEpochMilliseconds()
             }.onFailure {
                 it.printStackTrace()
             }
