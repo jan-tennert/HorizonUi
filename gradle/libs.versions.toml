@@ -1,7 +1,7 @@
 [versions]
-compose = "1.5.3"
-kotlin = "1.9.10"
-ktor = "2.3.4"
+compose = "1.5.10"
+kotlin = "1.9.20"
+ktor = "2.3.6"
 koin-compose = "1.1.0"
 koin = "3.5.0"
 serialization = "1.6.0"
