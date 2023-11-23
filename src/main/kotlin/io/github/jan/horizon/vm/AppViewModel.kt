@@ -63,6 +63,12 @@ class AppViewModel: KoinComponent {
         expandState.remove(body.name)
     }
 
+    fun changeSimulateState(body: BodyData, simulate: Boolean) {
+        stars.value = stars.value.map { if(it.data == body) Body(it.data.copy(simulate = simulate), it.parent) else it }
+        planets.value = planets.value.map { if(it.data == body) Body(it.data.copy(simulate = simulate), it.parent) else it }
+        moons.value = moons.value.map { if(it.data == body) Body(it.data.copy(simulate = simulate), it.parent) else it }
+    }
+
     fun load() {
         scope.launch {
             runCatching {

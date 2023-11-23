@@ -72,6 +72,7 @@ fun BodyScreen(viewModel: AppViewModel) {
                     onDelete = { viewModel.deleteBody(star.data) },
                     onExpand = { expandState[star.data.name] = !expandedStar },
                     onEdit = { old, new -> viewModel.editBody(BodyType.STAR, old, new) },
+                    onSimulateChange = { viewModel.changeSimulateState(star.data, it) },
                     type = BodyType.STAR
                 )
                 if (!expandedStar) return@forEach
@@ -85,6 +86,7 @@ fun BodyScreen(viewModel: AppViewModel) {
                         onDelete = { viewModel.deleteBody(planet.data) },
                         onExpand = { expandState[planet.data.name] = !expandedPlanet },
                         onEdit = { old, new -> viewModel.editBody(BodyType.PLANET, old, new) },
+                        onSimulateChange = { viewModel.changeSimulateState(planet.data, it) },
                         type = BodyType.PLANET
                     )
                     if (!expandedPlanet) return@inner
@@ -96,6 +98,7 @@ fun BodyScreen(viewModel: AppViewModel) {
                             onDelete = { viewModel.deleteBody(moon.data) },
                             onExpand = {},
                             onEdit = { old, new -> viewModel.editBody(BodyType.MOON, old, new) },
+                            onSimulateChange = { viewModel.changeSimulateState(moon.data, it) },
                             type = BodyType.MOON
                         )
                     }
@@ -156,6 +159,7 @@ fun LazyListScope.BodyList(
     expanded: Boolean,
     onCreate: (BodyData) -> Unit = {},
     onEdit: (old: BodyData, new: BodyData) -> Unit,
+    onSimulateChange: (Boolean) -> Unit = {},
     onDelete: () -> Unit = {},
     onExpand: () -> Unit
 ) {
@@ -173,6 +177,7 @@ fun LazyListScope.BodyList(
             Spacer(Modifier.width(padding))
             BodyCard(
                 body.data.name,
+                body.data.simulate,
                 Modifier.padding(6.dp),
                 expanded = expanded,
                 onExpand = if (type != BodyType.MOON) {
@@ -182,7 +187,8 @@ fun LazyListScope.BodyList(
                     { showCreateDialog = !showCreateDialog }
                 } else null,
                 onDelete = onDelete,
-                onEdit = { showEditDialog = !showEditDialog }
+                onEdit = { showEditDialog = !showEditDialog },
+                onSimulateChange = { onSimulateChange(!body.data.simulate) }
             )
         }
 

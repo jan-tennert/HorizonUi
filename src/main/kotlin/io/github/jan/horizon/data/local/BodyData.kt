@@ -26,7 +26,8 @@ data class BodyData(
     val modelPath: String,
     val diameter: Double = 0.0,
     val rotationSpeed: Double = 0.0,
-    val axialTilt: Double = 0.0
+    val axialTilt: Double = 0.0,
+    val simulate: Boolean = true,
 )
 
 @Serializable

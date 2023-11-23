@@ -19,8 +19,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun BodyCard(
     name: String,
+    simulate: Boolean,
     modifier: Modifier = Modifier,
     expanded: Boolean = false,
+    onSimulateChange: () -> Unit = {},
     onExpand: (() -> Unit)? = null,
     onCreate: (() -> Unit)? = null,
     onEdit: () -> Unit = {},
@@ -40,6 +42,7 @@ fun BodyCard(
                             add(ContextMenuItem("Create", onCreate))
                         }
                         add(ContextMenuItem("Edit", onEdit))
+                        add(ContextMenuItem(if(simulate) "Disable Simulation" else "Enable Simulation", onSimulateChange))
                         add(ContextMenuItem("Delete", onDelete))
                     }
                 }
@@ -62,13 +65,5 @@ fun BodyCard(
         Card(onExpand, modifier, content = content)
     } else {
         Card(modifier, content = content)
-    }
-}
-
-@Composable
-@Preview
-fun BodyCardPreview() {
-    BodyCard("Earth") {
-
     }
 }
